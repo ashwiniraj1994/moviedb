@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myModule">
+   <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <title>My AngularJS App</title>
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width">
+      <script src="https://code.angularjs.org/1.3.0-rc.2/angular.min.js"></script>
+      <script src="https://code.angularjs.org/1.3.0-rc.2/angular-route.min.js"></script>
+      <script src="https://code.angularjs.org/1.3.0-rc.2/angular-resource.min.js"></script>
+      <script src="scripts/app.js"></script>
+      <!-- build:css(.tmp) styles/main.css -->
+       <link href="moviedb.css" rel="stylesheet">
+      <!-- endbuild -->
+   </head>
+   <body > 
+      <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+      <![endif]-->
+      <!--[if lt IE 9]>
+      <script src="bower_components/es5-shim/es5-shim.js"></script>
+      <script src="bower_components/json3/lib/json3.min.js"></script>
+      <![endif]-->
+      
+      <img src="movieDB.jpg" alt="Movie Database" style="width:304px;height:228px;">
+      <div class="container"  ng-controller="movieCrtl">
+      
+      <div id="centered">
+                     <label for="rating"></label>
+                     <input  type="text" ng-model="movieName" placeholder="Search..." id="centered">
+       </div>
+            
+        <div class="row">
+          <br>
+            <div class="col-12 col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left"  ">
+              <div class="form-group float-label-control">
+                  <button class="button" type="submit" ng-click="getAllMovie()">Search Movie</button>
+               </div>
+            </div>
+         </div>
+         <br>
+         
+     <table class="table table-bordered"> 
+     <thead>
+     <tr>
+     <th style="min-width: 80px;">Moviename</th>
+        <th style="min-width: 80px;">Language</th>
+        <th style="min-width: 80px;">Rating</th>
+        <th style="min-width: 80px;">Description</th>
+        <th style="min-width: 80px;">Review</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="search in movie" >
+            <td> {{search.movieName}} </td>
+            <td> {{search.language}} </td>
+            <td> {{search.description}} </td>
+            <td> {{search.rating}} </td> 
+            <td> {{search.review}} </td>        
+        </tr>
+        </tbody>
+       </table>
+       <hr>
+       <br>
+       
+       <h4> Enter ID to get a movie </h4>
+       <div>
+            <div class="form-group float-label-control">
+                     <label for="rating"></label>
+                     <input class="centered" type="text" id="movieId" ng-model="movieId" placeholder="Enter ID.." class="form-control">
+            </div>
+            <br>
+            
+            <div class="form-group float-label-control">
+                  <button class="submit " type="submit"  ng-click="getMovie()">Load Movie</button>
+               </div>
+            
+         </div>
+         
+         
+       
+       <h4> Create your Own Movie </h4>
+       
+       <div class="col-12 col-lg-6 col-md-6 col-sm-6 col-xs-12">
+            <div class="info-block">
+               <!-- BODY BOX-->
+               <form role="form">
+               
+                  <div class="form-group float-label-control" ng-if="movie.id">
+                     <label for="siteName"> Id</label>
+                     {{movie.id}}
+                  </div>
+                  <br>
+           
+              <div class="form-group float-label-control">
+                     <label for="siteName"> </label>
+                     <input  class = "centered" type="text" id="movieName" ng-model="movie.movieName" placeholder="Enter Movie Name.." class="form-control">
+                  </div>
+                  <br>
+                  <div class="form-group float-label-control">
+                     <label for="language"></label>
+                     <input class = "centered" type="text" id="language" ng-model="movie.language" placeholder="Enter Language.." class="form-control">
+                  </div>
+                  <br>
+                  <div class="form-group float-label-control">
+                     <label for="rating"></label>
+                     <input class = "centered" type="text" id="rating" ng-model="movie.rating" placeholder="Enter rating.." class="form-control">
+                  </div>
+                  <br>
+                  <div class="form-group float-label-control">
+                     <label for="description"></label>
+                     <input class = "centered" type="text" id="rating" ng-model="movie.description" placeholder="Enter description.." class="form-control">
+                  </div>
+                  <br>
+                  <div class="form-group float-label-control">
+                     <label for="description"></label>
+                     <input class = "centered" type="text" id="rating" ng-model="movie.review" placeholder="Enter review.." class="form-control">
+                  </div>
+            </div>
+         </div>
+    
+         
+         <div class="row">
+          <br>
+            <div class="col-12 col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left"  ">
+              <div class="form-group float-label-control">
+                  <button class="submit " type="submit" ng-if="!movie.id" ng-click="createMovie()">Create Movie</button>
+               </div>
+            </div>
+         </div>
+         
+          <div class="row">
+          <br>
+            <div class="col-12 col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left"  ">
+              <div class="form-group float-label-control">
+                  <button class="submit " type="submit" ng-if="movie.id" ng-click="editMovie()">Edit Movie</button>
+               </div>
+            </div>
+            <br>
+            <div class="col-12 col-lg-3 col-md-3 col-sm-3 col-xs-12 text-left"  ">
+              <div class="form-group float-label-control">
+                  <button class="submit " type="submit" ng-if="movie.id" ng-click="deleteMovie()">Delete Movie</button>
+               </div>
+            </div>
+         </div>
+         <hr>
+         <br>
+         <br>
+         
+       </form>
+         
+        
+      </div>
+   </body>
+</html>
